@@ -20,7 +20,7 @@ import Foundation
 import Dispatch
 
 public struct HTTPData: SMData {
-  public let timeOfRequest: Int
+  public let timeOfRequest: Int64
   public let url: String
   public let duration: Double
   public let statusCode: HTTPStatusCode?
@@ -70,7 +70,7 @@ private class HttpMonitor: ServerMonitor {
             queue.sync {
                 for (index,req) in requestStore.enumerated() {
                     if requestTemp === req.request {
-                        self.sM.emitData(HTTPData(timeOfRequest:Int(req.requestTime),
+                        self.sM.emitData(HTTPData(timeOfRequest:Int64(req.requestTime),
                              url:req.request.urlURL.absoluteString,
                              duration:(self.timeIntervalSince1970MilliSeconds - req.requestTime),
                              statusCode:response.statusCode, requestMethod:req.request.method))

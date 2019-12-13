@@ -26,7 +26,7 @@ import CloudFoundryEnv
 import Dispatch
 
 struct HTTPAggregateData: SMData {
-    public var timeOfRequest: Int = 0
+    public var timeOfRequest: Int64 = 0
     public var url: String = ""
     public var longest: Double = 0
     public var average: Double = 0
