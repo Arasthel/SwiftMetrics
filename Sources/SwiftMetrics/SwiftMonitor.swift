@@ -123,7 +123,6 @@ public class SwiftMonitor {
     private func formatCPU(messages: String) {
         if(running) {
             for message in messages.split(separator: "\n") {
-                print("Format memory: " + message)
                 if message.contains("@#") {
                     swiftMetrics.loaderApi.logMessage(debug, "formatCPU(): Raising CPU event")
                     //cpu: startCPU@#1412609879696@#0.00499877@#0.137468
@@ -147,7 +146,6 @@ public class SwiftMonitor {
     private func formatMemory(messages: String) {
         if(running) {
             for message in messages.split(separator: "\n") {
-                print("Format memory: " + message)
                 if message.contains(",") {
                     swiftMetrics.loaderApi.logMessage(debug, "formatMemory(): Raising Memory event")
                     ///MemorySource,1415976582652,totalphysicalmemory=16725618688,physicalmemory=52428800,privatememory=374747136,virtualmemory=374747136,freephysicalmemory=1591525376
