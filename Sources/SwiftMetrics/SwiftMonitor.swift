@@ -123,6 +123,7 @@ public class SwiftMonitor {
     private func formatCPU(messages: String) {
         if(running) {
             for message in messages.split(separator: "\n") {
+                print("Format memory: " + message)
                 if message.contains("@#") {
                     swiftMetrics.loaderApi.logMessage(debug, "formatCPU(): Raising CPU event")
                     //cpu: startCPU@#1412609879696@#0.00499877@#0.137468
@@ -130,7 +131,7 @@ public class SwiftMonitor {
                     for value in message.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).split(separator: "#") {
                         values.append(value.last == "@" ? value.dropLast() : value)
                     }
-                    if let timeOfSample = Int(values[1]), let percentUsedByApplication = Float(values[2]),
+                    if let timeOfSample = Int64(values[1]), let percentUsedByApplication = Float(values[2]),
                         let percentUsedBySystem = Float(values[3]) {
                         let cpu = CPUData(timeOfSample: timeOfSample, percentUsedByApplication: percentUsedByApplication,
                                           percentUsedBySystem: percentUsedBySystem)
@@ -146,13 +147,14 @@ public class SwiftMonitor {
     private func formatMemory(messages: String) {
         if(running) {
             for message in messages.split(separator: "\n") {
+                print("Format memory: " + message)
                 if message.contains(",") {
                     swiftMetrics.loaderApi.logMessage(debug, "formatMemory(): Raising Memory event")
                     ///MemorySource,1415976582652,totalphysicalmemory=16725618688,physicalmemory=52428800,privatememory=374747136,virtualmemory=374747136,freephysicalmemory=1591525376
                     let values = message.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).split(separator: ",")
                     if let physicalTotal = Int(values[2].split(separator: "=")[1]),
                         let physicalFree = Int(values[6].split(separator: "=")[1]),
-                        let timeOfSample = Int(values[1]),
+                        let timeOfSample = Int64(values[1]),
                         let applicationAddressSpaceSize = Int(values[5].split(separator: "=")[1]),
                         let applicationPrivateSize = Int(values[4].split(separator: "=")[1]),
                         let applicationRAMUsed = Int(values[3].split(separator: "=")[1]) {

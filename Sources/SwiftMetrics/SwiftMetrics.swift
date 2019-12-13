@@ -28,13 +28,13 @@ public protocol SMData {
 }
 
 public struct CPUData: SMData {
-  public let timeOfSample: Int
+  public let timeOfSample: Int64
   public let percentUsedByApplication: Float
   public let percentUsedBySystem: Float
 }
 
 public struct MemData: SMData {
-  public let timeOfSample: Int
+  public let timeOfSample: Int64
   public let totalRAMOnSystem: Int
   public let totalRAMUsed: Int
   public let totalRAMFree: Int
@@ -52,7 +52,7 @@ public struct InitData: SMData {
 }
 
 public struct LatencyData: SMData {
-  public let timeOfSample: Int
+  public let timeOfSample: Int64
   public let duration: Double
 }
 
@@ -179,7 +179,7 @@ open class SwiftMetrics {
         DispatchQueue.global().async {
           let timeNow = Date().timeIntervalSince1970 * 1000
           let latencyTime = timeNow - preDispatchTime
-          self.emitData(LatencyData(timeOfSample: Int(preDispatchTime), duration:latencyTime))
+          self.emitData(LatencyData(timeOfSample: Int64(preDispatchTime), duration:latencyTime))
           self.testLatency()
         }
       }
